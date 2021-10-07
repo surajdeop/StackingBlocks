@@ -5,7 +5,9 @@ import com.anz.compares.CompareBlocks;
 import com.anz.models.Block;
 
 import java.util.stream.Stream;
-
+/**
+ * Compute all possible stack height.
+ */
 public final class ComputeStackHeight {
     private final CompareBlocks compareBlocks;
 

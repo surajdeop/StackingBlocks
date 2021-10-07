@@ -5,6 +5,9 @@ import com.anz.exception.InvalidInputException;
 import com.anz.models.Block;
 import com.anz.validations.RangeCheck;
 
+/**
+ * Convert to block from Input.
+ */
 public final class BlockConvertor implements Convertor<String, Block>, RangeCheck {
     private final Convertor<String, int[]> dimensionConvertor;
     private BlockConvertor() {

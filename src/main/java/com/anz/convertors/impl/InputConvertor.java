@@ -7,6 +7,10 @@ import com.anz.validations.RangeCheck;
 
 import java.util.regex.Pattern;
 
+/**
+ * Convert to blocks from Input.
+ */
+
 public final class InputConvertor implements Convertor<String, String[]>, NullEmptyCheck<String>, RangeCheck {
 
     private InputConvertor() {

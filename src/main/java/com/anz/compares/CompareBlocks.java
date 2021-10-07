@@ -2,6 +2,9 @@ package com.anz.compares;
 
 import com.anz.models.Block;
 
+/**
+ * Compare the blocks to put into another block.
+ */
 public final class CompareBlocks {
     private CompareBlocks() {
     }

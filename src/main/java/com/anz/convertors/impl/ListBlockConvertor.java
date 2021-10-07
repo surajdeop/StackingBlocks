@@ -4,6 +4,9 @@ import com.anz.convertors.Convertor;
 import com.anz.exception.InvalidInputException;
 import com.anz.models.RotatedBlock;
 
+/**
+ * Convert to list of block from Input.
+ */
 public final class ListBlockConvertor implements Convertor<String, RotatedBlock[]> {
     private final Convertor<String, String[]> inputConvertor;
     private final Convertor<String, RotatedBlock> rotatingBlockConvertor;

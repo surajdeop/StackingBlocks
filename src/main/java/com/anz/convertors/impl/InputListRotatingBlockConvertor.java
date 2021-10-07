@@ -2,7 +2,9 @@ package com.anz.convertors.impl;
 import com.anz.convertors.Convertor;
 import com.anz.exception.InvalidInputException;
 import com.anz.models.Block;
-
+/**
+ * Convert to list of rotating block from Input.
+ */
 public final class InputListRotatingBlockConvertor implements Convertor<String, Block[]> {
     private final Convertor<String, Block[]> listRotatingBlockConvertor;
 

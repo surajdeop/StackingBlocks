@@ -7,6 +7,9 @@ import com.anz.validations.RangeCheck;
 
 import java.util.Arrays;
 
+/**
+ * Convert to Dimension from Input.
+ */
 public final class DimensionConvertor implements Convertor<String, int[]>, RangeCheck, NullEmptyCheck<String> {
 
     private DimensionConvertor() {

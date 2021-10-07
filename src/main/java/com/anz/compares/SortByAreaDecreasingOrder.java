@@ -4,6 +4,9 @@ import com.anz.models.Block;
 
 import java.util.Comparator;
 
+/**
+ * Sorting the block.
+ */
 public final class SortByAreaDecreasingOrder implements Comparator<Block> {
 
     @Override
