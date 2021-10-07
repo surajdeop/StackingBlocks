@@ -28,7 +28,7 @@ public class ValidationTest {
         try {
             blocks = inputConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertTrue(new RangeCheck() {
         }.rangeBetweenOneToHundred(blocks.length));
@@ -41,7 +41,7 @@ public class ValidationTest {
         try {
             blocks = inputConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertFalse(new RangeCheck() {
         }.rangeBetweenOneToHundred(blocks.length));
@@ -54,7 +54,7 @@ public class ValidationTest {
         try {
             dimensions = dimensionConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertTrue(new RangeCheck() {
         }.isDimensionSizeThree(dimensions));
@@ -67,7 +67,7 @@ public class ValidationTest {
         try {
             dimensions = dimensionConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertFalse(new RangeCheck() {
         }.isDimensionSizeThree(dimensions));
@@ -80,7 +80,7 @@ public class ValidationTest {
         try {
             dimensions = dimensionConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertFalse(new RangeCheck() {
         }.isDimensionSizeThree(dimensions));

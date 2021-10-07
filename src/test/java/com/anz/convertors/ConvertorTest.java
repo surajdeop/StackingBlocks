@@ -37,7 +37,7 @@ public class ConvertorTest {
         try {
             blocks = inputConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertEquals(2, blocks.length);
         assertEquals("1,2,3", blocks[0]);
@@ -51,7 +51,7 @@ public class ConvertorTest {
         try {
             dimension = dimensionConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertEquals(3, dimension.length);
         assertEquals(1, dimension[0]);
@@ -66,7 +66,7 @@ public class ConvertorTest {
         try {
             block = blockConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertNotNull(block);
         assertEquals(1, block.getWidth());
@@ -81,7 +81,7 @@ public class ConvertorTest {
         try {
             rotatedBlocks = rotatingBlockConvertor.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertNotNull(rotatedBlocks);
         assertNotNull(rotatedBlocks.getOriginalBlock());
@@ -96,7 +96,7 @@ public class ConvertorTest {
         try {
             blocks = blockConvertorArray.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertEquals(2, blocks.length);
     }
@@ -108,7 +108,7 @@ public class ConvertorTest {
         try {
             rotatingBlocks = rotatingBlockConvertorArray.convert(input);
         } catch (InvalidInputException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertEquals(6, rotatingBlocks.length);
     }
