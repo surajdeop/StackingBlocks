@@ -25,18 +25,18 @@ public class StackHeight {
     }
 
     public int getMaxStackHeight() {
-        int maxStackHeight = 0;
+        final Block[] blocks;
         try {
-            final Block[] blocks = inputRotatingBlockConvertor.convert(input);
-            /* Sorting the blocks on the bases of Area in decreasing order.*/
-            Arrays.sort(blocks, new SortByAreaDecreasingOrder());
-            /* Computing optimized maxStackHeightsArr[] values in bottom up manner */
-            int[] maxStackHeightsArr = computeStackHeight.computingOptimizedStackHeight(blocks);
-            /* Pick maximum of all maxStackHeightsArr values */
-            maxStackHeight = Arrays.stream(maxStackHeightsArr).max().orElse(0);
+            blocks = inputRotatingBlockConvertor.convert(input);
         } catch (InvalidInputException e) {
             e.printStackTrace();
+            return 0;
         }
-        return maxStackHeight;
+        /* Sorting the blocks on the bases of Area in decreasing order.*/
+        Arrays.sort(blocks, new SortByAreaDecreasingOrder());
+        /* Computing optimized maxStackHeightsArr[] values in bottom up manner */
+        int[] maxStackHeightsArr = computeStackHeight.computingOptimizedStackHeight(blocks);
+        /* Pick maximum of all maxStackHeightsArr values */
+        return Arrays.stream(maxStackHeightsArr).max().orElse(0);
     }
 }
