@@ -8,14 +8,13 @@ import org.anz.convertors.impl.ShapeConvertor;
 import org.anz.exception.InvalidInputException;
 import org.anz.factory.RotateShapeFactory;
 import org.anz.models.Shape;
+import org.anz.rotate.RotateShape;
 import org.anz.sort.SortShapes;
 import org.anz.sort.impl.SortBlocks;
 import org.anz.utils.ShapeUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StackHeight {
@@ -26,7 +25,8 @@ public class StackHeight {
 
     private StackHeight() {
         inputConvertor = InputConvertor.getInstance();
-        sortShapes = SortBlocks.getInstance();
+        sortShapes = SortBlocks
+                .getInstance();
         subsetShapes = SubsetBlock.getInstance();
         rotateShapeFactory = RotateShapeFactory.getInstance();
     }
@@ -58,14 +58,33 @@ public class StackHeight {
     }
 
     private List<Set<Shape>> getRotateShapes(String[] dimensions) throws InvalidInputException {
+        ExecutorService executorService
+                = Executors.newFixedThreadPool(4);
+
         List<Set<Shape>> rotatedShapes = new ArrayList<>();
+        List<Future<Set<Shape>>> results = new ArrayList<>();
+
         for (String dimension : dimensions) {
             Shape shape = ShapeConvertor.getInstance().convert(dimension);
-            rotatedShapes.add(rotateShapeFactory.createRotateShape(shape).rotate(shape));
+            RotateShape rotateShape = rotateShapeFactory.createRotateShape(shape);
+            Future<Set<Shape>> shapeTask = executorService.submit(rotateShape);
+            results.add(shapeTask);
         }
+
+        for (Future<Set<Shape>> future : results) {
+            try {
+                Set<Shape> result = future.get();
+                rotatedShapes.add(result);
+            } catch (InterruptedException |ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        //shut down the executor service now
+        executorService.shutdown();
 
         return rotatedShapes;
     }
+
 
     private List<Shape> getSortedRotatedShapes(List<Set<Shape>> rotatedShapesList) {
         List<Shape> rotatedShapes = new ArrayList<>();

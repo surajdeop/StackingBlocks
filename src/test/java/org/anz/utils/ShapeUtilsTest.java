@@ -6,11 +6,15 @@ import org.anz.models.Shape;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ShapeUtilsTest {
 
@@ -19,9 +23,22 @@ public class ShapeUtilsTest {
         Shape first = BlockFactory.getInstance().createBlock(2, 3, 1);
         Shape second = BlockFactory.getInstance().createBlock(1, 2, 3);
 
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        List<Future<Set<Shape>>> tasks = new ArrayList<>();
+
+        tasks.add(executor.submit(RotateShapeFactory.getInstance().createRotateShape(first)));
+        tasks.add(executor.submit(RotateShapeFactory.getInstance().createRotateShape(second)));
+
         List<Set<Shape>> rotatedShapes = new ArrayList<>();
-        rotatedShapes.add(RotateShapeFactory.getInstance().createRotateShape(first).rotate(first));
-        rotatedShapes.add(RotateShapeFactory.getInstance().createRotateShape(second).rotate(second));
+        try {
+            for (Future<Set<Shape>> task:
+                 tasks) {
+                rotatedShapes.add(task.get());
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            fail();
+        }
 
         assertTrue(ShapeUtils.isRearrangingWithSameDimension(rotatedShapes));
 
@@ -32,10 +49,22 @@ public class ShapeUtilsTest {
         Shape first = BlockFactory.getInstance().createBlock(2, 3, 1);
         Shape second = BlockFactory.getInstance().createBlock(2, 2, 3);
 
-        List<Set<Shape>> rotatedShapes = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        List<Future<Set<Shape>>> tasks = new ArrayList<>();
 
-        rotatedShapes.add(RotateShapeFactory.getInstance().createRotateShape(first).rotate(first));
-        rotatedShapes.add(RotateShapeFactory.getInstance().createRotateShape(second).rotate(second));
+        tasks.add(executor.submit(RotateShapeFactory.getInstance().createRotateShape(first)));
+        tasks.add(executor.submit(RotateShapeFactory.getInstance().createRotateShape(second)));
+
+        List<Set<Shape>> rotatedShapes = new ArrayList<>();
+        try {
+            for (Future<Set<Shape>> task:
+                    tasks) {
+                rotatedShapes.add(task.get());
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            fail();
+        }
 
         assertFalse(ShapeUtils.isRearrangingWithSameDimension(rotatedShapes));
     }

@@ -3,50 +3,61 @@ package org.anz.rotate;
 import org.anz.factory.BlockFactory;
 import org.anz.models.Shape;
 import org.anz.rotate.impl.RotateCube;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static org.junit.Assert.*;
 
 public class RotateCubeTest {
     private int edge;
     private BlockFactory blockFactory;
-    private RotateShape rotateShape;
 
     @Before
     public void setup() {
         edge = 2;
         blockFactory = BlockFactory.getInstance();
-        rotateShape = RotateCube.getInstance();
-    }
-
-    @Test
-    public void rotateShape() {
-        rotateShape = RotateCube.getInstance();
-        assertNotNull(rotateShape);
     }
 
     @Test
     public void rotateCube() {
-        rotateShape = RotateCube.getInstance();
-        assertNotNull(rotateShape);
         Shape block = blockFactory.createBlock(edge, edge, edge);
-        Set<Shape> shapes = rotateShape.rotate(block);
-        assertEquals(1, shapes.size());
+        RotateShape rotateShape = RotateCube.getInstance(block);
+        assertNotNull(rotateShape);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Set<Shape>> result = executor.submit(rotateShape);
+        try {
+            Set<Shape> shapes = result.get();
+            assertEquals(1, shapes.size());
+        }catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+
     }
 
     @Test
     public void checkRotateCube() {
-        rotateShape = RotateCube.getInstance();
-        assertNotNull(rotateShape);
         Shape block = blockFactory.createBlock(edge, edge, edge);
-        Set<Shape> shapes = rotateShape.rotate(block);
-        assertEquals(1, shapes.size());
+        RotateShape rotateShape = RotateCube.getInstance(block);
+        assertNotNull(rotateShape);
 
-        Shape rotatedBlock = blockFactory.createBlock(edge, edge, edge);
-        assertTrue(shapes.contains(rotatedBlock));
-
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Set<Shape>> result = executor.submit(rotateShape);
+        try {
+            Set<Shape> shapes = result.get();
+            assertEquals(1, shapes.size());
+            Shape rotatedBlock = blockFactory.createBlock(edge, edge, edge);
+            assertTrue(shapes.contains(rotatedBlock));
+        }catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 }

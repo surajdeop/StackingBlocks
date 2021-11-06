@@ -10,13 +10,17 @@ import java.util.Set;
 
 public class RotateCuboid implements RotateShape {
     private final BlockFactory blockFactory;
-
-    private RotateCuboid() {
+    private final Shape shape;
+    {
         blockFactory = BlockFactory.getInstance();
     }
 
-    public static RotateShape getInstance() {
-        return RotateCuboidHelper.INSTANCE;
+    private RotateCuboid(Shape shape) {
+        this.shape = shape;
+    }
+
+    public static RotateShape getInstance(Shape shape) {
+        return new RotateCuboid(shape);
     }
 
     /**
@@ -26,8 +30,7 @@ public class RotateCuboid implements RotateShape {
      * @param shape - pass actual shape
      * @return array of blocks
      */
-    @Override
-    public Set<Shape> rotate(Shape shape) {
+    private Set<Shape> rotate(Shape shape) {
         Set<Shape> shapes = new HashSet<>();
         Cuboid cuboid = (Cuboid) shape;
 
@@ -45,7 +48,9 @@ public class RotateCuboid implements RotateShape {
         return shapes;
     }
 
-    private static class RotateCuboidHelper {
-        private static final RotateShape INSTANCE = new RotateCuboid();
+    @Override
+    public Set<Shape> call() throws Exception {
+        return rotate(shape);
     }
+
 }

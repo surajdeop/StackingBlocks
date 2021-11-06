@@ -24,9 +24,9 @@ public class RotateShapeFactory {
     public RotateShape createRotateShape(Shape shape) {
         final RotateShape rotateShape;
         if (shape instanceof Cube) {
-            rotateShape = RotateCube.getInstance();
+            rotateShape = RotateCube.getInstance(shape);
         } else if (shape instanceof Cuboid) {
-            rotateShape = RotateCuboid.getInstance();
+            rotateShape = RotateCuboid.getInstance(shape);
         } else {
             rotateShape = null;
         }
